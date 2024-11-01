@@ -14,14 +14,13 @@ defineProps({
 });
 
 const merchant = usePage().props.merchant;
-console.log(merchant.nama);
 
 const form = useForm({
     nama: merchant.nama,
     alamat: merchant.alamat,
     kota: merchant.kota,
-    no_telepon: merchant.no_telpon,
-    description: merchant.decription,
+    no_telpon: merchant.no_telpon,
+    decription: merchant.decription,
 });
 </script>
 
@@ -54,22 +53,22 @@ const form = useForm({
                             @submit.prevent="form.patch(route('merchant.update'))"
                             class="mt-6 space-y-6">
                             <div>
-                                <InputLabel for="name" value="Nama" />
+                                <InputLabel for="nama" value="Nama" />
 
                                 <TextInput
-                                    id="name"
+                                    id="nama"
                                     type="text"
                                     class="mt-1 block w-full"
                                     v-model="form.nama"
                                     required
                                     autofocus
-                                    autocomplete="name"
+                                    autocomplete="nama"
                                 />
 
                                 <InputError class="mt-2" :message="form.errors.nama" />
                             </div>
                             <div>
-                                <InputLabel for="name" value="Alamat" />
+                                <InputLabel for="alamat" value="Alamat" />
 
                                 <TextArea
                                     id="alamat"
@@ -78,13 +77,13 @@ const form = useForm({
                                     v-model="form.alamat"
                                     required
                                     autofocus
-                                    autocomplete="name"
+                                    autocomplete="alamat"
                                 />
 
                                 <InputError class="mt-2" :message="form.errors.alamat" />
                             </div>
                             <div>
-                                <InputLabel for="name" value="Kota" />
+                                <InputLabel for="kota" value="Kota" />
 
                                 <TextInput
                                     id="kota"
@@ -93,37 +92,37 @@ const form = useForm({
                                     v-model="form.kota"
                                     required
                                     autofocus
-                                    autocomplete="name"
+                                    autocomplete="kota"
                                 />
 
                                 <InputError class="mt-2" :message="form.errors.kota" />
                             </div>
                             <div>
-                                <InputLabel for="name" value="No.Telepon" />
+                                <InputLabel for="no_telpon" value="No.Telepon" />
 
                                 <TextInput
                                     id="no_telpon"
                                     type="text"
                                     class="mt-1 block w-full"
-                                    v-model="form.no_telepon"
+                                    v-model="form.no_telpon"
                                     required
                                     autofocus
-                                    autocomplete="name"
+                                    autocomplete="no_telpon"
                                 />
 
-                                <InputError class="mt-2" :message="form.errors.no_telepon" />
+                                <InputError class="mt-2" :message="form.errors.no_telpon" />
                             </div>
                             <div>
-                                <InputLabel for="name" value="Deskripsi" />
+                                <InputLabel for="decription" value="Deskripsi" />
 
                                 <TextArea
                                     id="decription"
                                     type="text"
                                     class="mt-1 block w-full"
-                                    v-model="form.description"
+                                    v-model="form.decription"
                                     required
                                     autofocus
-                                    autocomplete="name"
+                                    autocomplete="decription"
                                 />
 
                                 <InputError class="mt-2" :message="form.errors.description" />

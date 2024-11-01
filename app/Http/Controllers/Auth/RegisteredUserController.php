@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Models\MerchantProfile;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
@@ -44,6 +43,8 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
+        $user->assignRole($request->user_type);
+
         if ($request->user_type === 'merchant') {
             $request->validate([
                 'merchant_name' => 'required|string|max:255',
@@ -66,7 +67,6 @@ class RegisteredUserController extends Controller
         event(new Registered($user));
 
         Auth::login($user);
-        $user->assignRole($request->userType);
 
         return redirect(route('dashboard', absolute: false));
     }

@@ -10,7 +10,6 @@ class MerchantProfile extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id',
         'nama',
         'alamat',
         'kota',

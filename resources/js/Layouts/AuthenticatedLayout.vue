@@ -1,13 +1,27 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 import Dropdown from '@/Components/Dropdown.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
 import NavLink from '@/Components/NavLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 import { Link } from '@inertiajs/vue3';
+import axios from 'axios';
+
+const roles = ref([]);
+const permissions = ref([]);
+
+onMounted(async () => {
+  const response = await axios.get('/user/roles');
+  roles.value = response.data.roles;
+});
+
+function hasRole(role) {
+  return roles.value.includes(role);
+}
 
 const showingNavigationDropdown = ref(false);
+
 </script>
 
 <template>
@@ -42,6 +56,7 @@ const showingNavigationDropdown = ref(false);
                                 <NavLink
                                     :href="route('menu-makan')"
                                     :active="route().current('menu-makan')"
+                                    v-if="hasRole('merchant')"
                                 >
                                     Menu Katering
                                 </NavLink>
@@ -84,6 +99,7 @@ const showingNavigationDropdown = ref(false);
                                         </DropdownLink>
                                         <DropdownLink
                                             :href="route('merchant.edit')"
+                                            v-if="hasRole('merchant')"
                                         >
                                             Merchant
                                         </DropdownLink>
@@ -178,7 +194,7 @@ const showingNavigationDropdown = ref(false);
                             <ResponsiveNavLink :href="route('profile.edit')">
                                 Profile
                             </ResponsiveNavLink>
-                            <ResponsiveNavLink :href="route('merchant.edit')">
+                            <ResponsiveNavLink :href="route('merchant.edit')" v-if="hasRole('merchant')">
                                 Merchant
                             </ResponsiveNavLink>
                             <ResponsiveNavLink
