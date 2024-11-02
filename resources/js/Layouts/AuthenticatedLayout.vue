@@ -54,8 +54,8 @@ const showingNavigationDropdown = ref(false);
                                     Dashboard
                                 </NavLink>
                                 <NavLink
-                                    :href="route('menu-makan')"
-                                    :active="route().current('menu-makan')"
+                                    :href="route('menu.list')"
+                                    :active="route().current('menu.list')"
                                     v-if="hasRole('merchant')"
                                 >
                                     Menu Katering
