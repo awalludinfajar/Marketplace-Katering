@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoryMenuController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\MenuKateringController;
 use App\Http\Controllers\MerchantProfileController;
@@ -33,7 +34,12 @@ Route::middleware('auth')->group(function () {
     
     Route::prefix('menu-makanan')->group( function () { 
         Route::get('/list', [MenuKateringController::class, 'index'])->name('menu.list');
-        Route::get('/create', [MenuKateringController::class, 'create'])->name('menu.create');
+        Route::get('/form', [MenuKateringController::class, 'form'])->name('menu.form');
+        Route::post('/form', [MenuKateringController::class, 'store'])->name('menu.store');
+    });
+
+    Route::prefix('menu-category')->group(function () {
+       Route::get('/option', [CategoryMenuController::class, 'optionData'])->name('category.json'); 
     });
 });
 

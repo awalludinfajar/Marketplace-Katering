@@ -1,8 +1,12 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
-import { Head, Link } from '@inertiajs/vue3';
+import { Head, Link, usePage } from '@inertiajs/vue3';
 import CardWidth from '@/Components/CardWidth.vue';
+import { ref } from 'vue'
+
+const listMenu = usePage().props.menu;
+const dataList = ref(listMenu);
 
 </script>
 
@@ -21,11 +25,11 @@ import CardWidth from '@/Components/CardWidth.vue';
                 <div class="bg-white p-4 shadow sm:rounded-lg sm:p-8" >
                     <section>
                         <div class="flex items-center gap-4 justify-end">
-                            <Link :href="route('menu.create')">
+                            <Link :href="route('menu.form')">
                                 <PrimaryButton>Create Menu</PrimaryButton>
                             </Link>
                         </div>
-                        <CardWidth></CardWidth>
+                        <CardWidth :data="dataList"/>
                     </section>
                 </div>
             </div>  

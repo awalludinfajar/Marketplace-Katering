@@ -9,6 +9,16 @@ class MenuKatering extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'merchant_profile_id',
+        'category_menu_id',
+        'nama',
+        'deskripsi',
+        'price',
+        'gambar',
+        'qty'
+    ];
+
     public function merchantProfile() {
         return $this->belongsTo(MerchantProfile::class);
     }

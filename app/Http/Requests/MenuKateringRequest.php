@@ -7,14 +7,6 @@ use Illuminate\Foundation\Http\FormRequest;
 class MenuKateringRequest extends FormRequest
 {
     /**
-     * Determine if the user is authorized to make this request.
-     */
-    public function authorize(): bool
-    {
-        return false;
-    }
-
-    /**
      * Get the validation rules that apply to the request.
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
@@ -22,11 +14,12 @@ class MenuKateringRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nama' => '',
-            'deskripsi' => '',
-            'harga' => '',
-            'gambar' => '',
-            'qty' => ''
+            'nama' => 'required|string|max:255',
+            'category_id' => 'required|numeric',
+            'deskripsi' => 'required|string',
+            'harga' => 'required|numeric',
+            'gambar' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+            'qty' => 'required|numeric|max:255'
         ];
     }
 }
