@@ -34,8 +34,10 @@ Route::middleware('auth')->group(function () {
     
     Route::prefix('menu-makanan')->group( function () { 
         Route::get('/list', [MenuKateringController::class, 'index'])->name('menu.list');
-        Route::get('/form', [MenuKateringController::class, 'form'])->name('menu.form');
+        Route::get('/form/{id}', [MenuKateringController::class, 'form'])->name('menu.form');
         Route::post('/form', [MenuKateringController::class, 'store'])->name('menu.store');
+        Route::put('/form/{id}', [MenuKateringController::class, 'update'])->name('menu.update');
+        Route::delete('/delete/{id}', [MenuKateringController::class, 'delete'])->name('menu.delete');
     });
 
     Route::prefix('menu-category')->group(function () {

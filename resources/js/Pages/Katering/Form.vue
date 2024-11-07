@@ -13,13 +13,22 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 const menu = usePage().props.menu;
 
 const form = useForm({
-    gambar: null,
-    nama: '',
-    category_id: 0,
-    deskripsi: '',
-    harga: 0,
-    qty: 0
+    gambar: menu === null? null : menu.gambar,
+    nama: menu === null? '' : menu.nama,
+    category_id: menu === null? 0 : menu.category_menu_id,
+    deskripsi: menu === null? '' : menu.deskripsi,
+    harga: menu === null? 0 : parseInt(menu.price),
+    qty: menu === null? 0 : menu.qty
 });
+
+function updateImageFile(file) {
+    form.gambar = file;
+}
+
+function updateOption(opt) {
+    form.category_id = opt;
+}
+
 </script>
 <template>
     <Head title="Buat Menu Makanan" />
@@ -45,13 +54,13 @@ const form = useForm({
                             </p>
                         </header>
                         <form action="" method="post" class="mt-6 space-y-6"
-                            @submit.prevent="form.post(route('menu.store'))"    
-                        >
+                            @submit.prevent="menu === null ? form.post(route('menu.store')) : form.put(route('menu.update', menu.id))" >
                             <div>
                                 <InputLabel for="gambar" value="Gambar" />
                                 <InputImage 
                                     id="gambar"
-                                    v-model="form.gambar"
+                                    :modelValue="form.gambar"
+                                    @update:modelValue="updateImageFile"
                                 />
                                 <InputError class="mt-2" :message="form.errors.gambar"/>
                             </div>
@@ -73,7 +82,8 @@ const form = useForm({
                                 <SelectOption 
                                     id="category_id"
                                     :url="route('category.json')"
-                                    v-model="form.category_id"
+                                    :modelValue="form.category_id"
+                                    @update:modelValue="updateOption"
                                 />
                                 <InputError class="mt-2" :message="form.errors.category_id"/>
                             </div>

@@ -60,6 +60,13 @@ const showingNavigationDropdown = ref(false);
                                 >
                                     Menu Katering
                                 </NavLink>
+                                <!-- <NavLink
+                                    :href="route('order.list')"
+                                    :active="route().current('order.list')"
+                                    v-if="hasRole('merchant')"
+                                >
+                                    Pesanan
+                                </NavLink> -->
                             </div>
                         </div>
 

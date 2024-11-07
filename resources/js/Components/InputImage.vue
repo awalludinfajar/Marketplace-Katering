@@ -1,27 +1,29 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 
-const model = defineProps({
+const modelImage = defineProps({
     modelValue: {
-        type: String,
-        require: true
+        type: [Object,String],
+        default: null
     },
 });
 
 const emit = defineEmits(['update:modelValue']);
 
-// const image = ref(null);
-const imageUrl = ref(null);
+const imageUrl = ref(modelImage.modelValue);
 
 function previewImage(event) {
     const file = event.target.files[0];
     if (file) {
         emit('update:modelValue', file);
-
-        // image.value = file;
         imageUrl.value = URL.createObjectURL(file);
     }
 }
+
+watch(() => modelImage.modelValue, (newVal) => {
+    imageUrl.value = newVal ?  URL.createObjectURL(newVal) : null;
+});
+
 </script>
 <template>
     <div>

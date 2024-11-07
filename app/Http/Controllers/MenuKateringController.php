@@ -12,20 +12,43 @@ use Inertia\Response;
 
 class MenuKateringController extends Controller
 {
-    public function index(Request $request) : Response {
+    public function index() : Response {
+        $menu = MenuKatering::paginate(5);
         return Inertia::render('Katering/List', [
-            'menu' => MenuKatering::get(),
+            'menu' => $menu,
         ]);
     }
 
-    public function form() : Response {
-        return Inertia::render('Katering/Form', []);
+    public function form($id) : Response {
+        return Inertia::render('Katering/Form', [
+            'menu' => $id !== 0 ? MenuKatering::find($id) : ''
+        ]);
+    }
+
+    public function update(MenuKateringRequest $request, $id) {
+
+        // if ($request->file('gambar') instanceof \Illuminate\Http\UploadedFile) {
+        //     $request->validate([
+        //         'gambar' => 'image|mimes:jpeg,png,jpg|max:2048',
+        //     ]);
+
+        // }
+
+        $menus = $request;
+        dd($menus);
+        // $oldData = MenuKatering::find($id);
+        // dd($oldData);
+
+        return null;
     }
 
     public function store(MenuKateringRequest $request) {
+        $request->validate([
+            'gambar' => 'image|mimes:jpeg,png,jpg|max:2048',
+        ]);
         $menus = $request->validated();
 
-        $pathImage = $request->file('gambar')->store('public/image');
+        $pathImage = $menus['gambar']->store('images', 'public');
         $url = Storage::url($pathImage);
 
         MenuKatering::create([
@@ -39,5 +62,23 @@ class MenuKateringController extends Controller
         ]);
 
         return Redirect::route('menu.list');
+    }
+
+    public function delete($id) {
+        $data = MenuKatering::find($id);
+        
+        if (!$data) {
+            return response()->json(['message' => 'Data not Found'], 404);
+        }
+
+        $sUrl = explode('/', $data->gambar);
+        $url = $sUrl[count($sUrl)-2].'/'.$sUrl[count($sUrl)-1];
+
+        if (Storage::disk('public')->exists($url)) {
+            Storage::disk('public')->delete($url);
+        }
+
+        $data->delete();
+        return response()->json(['message' => 'Data Successfully Deleted']);
     }
 }

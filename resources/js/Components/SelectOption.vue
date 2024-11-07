@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 import axios from 'axios';
 
 const props = defineProps({
@@ -31,6 +31,10 @@ async function fetchOption() {
 function updateSelectedId() {
     emit('update:modelValue', selectedId.value);
 }
+
+watch(() => props.modelValue, (newVal) => {
+    selectedId.value = newVal;
+});
 
 onMounted(() => {
     fetchOption();

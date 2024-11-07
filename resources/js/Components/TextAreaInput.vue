@@ -1,12 +1,12 @@
 <script setup>
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 
 const model = defineModel({
     type: String,
     required: true,
 });
 
-const textarea = ref(null);
+const textarea = ref(model.value);
 
 onMounted(() => {
     if (textarea.value.hasAttribute('autofocus')) {
@@ -15,6 +15,10 @@ onMounted(() => {
 });
 
 defineExpose({ focus: () => textarea.value.focus() });
+
+watch(() => model.value, (newVal) => {
+    textarea.value = newVal ? newVal : '';
+})
 </script>
 
 <template>

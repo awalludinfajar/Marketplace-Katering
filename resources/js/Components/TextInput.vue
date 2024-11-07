@@ -1,12 +1,12 @@
 <script setup>
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 
 const model = defineModel({
     type: String,
     required: true,
 });
 
-const input = ref(null);
+const input = ref(model.value);
 
 onMounted(() => {
     if (input.value.hasAttribute('autofocus')) {
@@ -15,6 +15,10 @@ onMounted(() => {
 });
 
 defineExpose({ focus: () => input.value.focus() });
+
+watch(() => model.value, (newVal) => {
+    input.value = newVal ? newVal : '';
+})
 </script>
 
 <template>
