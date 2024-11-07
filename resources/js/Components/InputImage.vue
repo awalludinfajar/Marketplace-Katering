@@ -11,12 +11,21 @@ const modelImage = defineProps({
 const emit = defineEmits(['update:modelValue']);
 
 const imageUrl = ref(modelImage.modelValue);
+const fileInputRef = ref(null);
 
 function previewImage(event) {
     const file = event.target.files[0];
     if (file) {
+        preImageInput();
+
         emit('update:modelValue', file);
         imageUrl.value = URL.createObjectURL(file);
+    }
+}
+
+function preImageInput() {
+    if (fileInputRef.value) {
+        fileInputRef.value.value = '';
     }
 }
 

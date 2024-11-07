@@ -2,7 +2,7 @@
 import { usePage } from '@inertiajs/vue3';
 import { Inertia } from '@inertiajs/inertia';
 
-const pagination = usePage().props.menu;
+const pagination = usePage().props.menu.data;
 
 if (pagination.links[0].label === "&laquo; Previous") {
     pagination.links[0].label = "Previous"

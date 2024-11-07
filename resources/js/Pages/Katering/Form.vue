@@ -54,7 +54,7 @@ function updateOption(opt) {
                             </p>
                         </header>
                         <form action="" method="post" class="mt-6 space-y-6"
-                            @submit.prevent="menu === null ? form.post(route('menu.store')) : form.put(route('menu.update', menu.id))" >
+                            @submit.prevent="menu === null ? form.post(route('menu.store')) : form.post(route('menu.update', menu.id))" >
                             <div>
                                 <InputLabel for="gambar" value="Gambar" />
                                 <InputImage 

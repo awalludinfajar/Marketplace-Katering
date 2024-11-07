@@ -4,7 +4,7 @@ import axios from 'axios';
 
 const props = defineProps({
     modelValue: {
-        type: Number,
+        type: [Number,String],
         required: true,
     },
     url: {

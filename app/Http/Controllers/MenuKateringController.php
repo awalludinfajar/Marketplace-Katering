@@ -12,10 +12,20 @@ use Inertia\Response;
 
 class MenuKateringController extends Controller
 {
-    public function index() : Response {
-        $menu = MenuKatering::paginate(5);
+    public function index(Request $request) : Response {
+        $getId = $request->input('refSelectedId', 0);
+
+        $query = MenuKatering::query();
+        if ($getId) {
+            $query->where('category_menu_id', $getId);
+        }
+
+        $menu = $query->where('merchant_profile_id', $request->user()->merchantProfile()->get()[0]->id)->paginate(5);
         return Inertia::render('Katering/List', [
-            'menu' => $menu,
+            'menu' => [
+                'data' => $menu
+            ],
+            'refSelectedId' => $getId
         ]);
     }
 
@@ -26,20 +36,38 @@ class MenuKateringController extends Controller
     }
 
     public function update(MenuKateringRequest $request, $id) {
+        if ($request->file('gambar') instanceof \Illuminate\Http\UploadedFile) {
+            $request->validate([
+                'gambar' => 'image|mimes:jpeg,png,jpg|max:2048',
+            ]);
+        }
+        $menus = $request->validated();
 
-        // if ($request->file('gambar') instanceof \Illuminate\Http\UploadedFile) {
-        //     $request->validate([
-        //         'gambar' => 'image|mimes:jpeg,png,jpg|max:2048',
-        //     ]);
+        $oldData = MenuKatering::find($id);
+        $newUrl = $oldData->gambar;
+        if ($menus['gambar'] != "" && $menus['gambar'] !== $oldData->gambar) {
+            // if not match it was true
+            $sUrl = explode('/', $oldData->gambar);
+            $oldUrl = $sUrl[count($sUrl)-2].'/'.$sUrl[count($sUrl)-1];
 
-        // }
+            if (Storage::disk('public')->exists($oldUrl)) {
+                Storage::disk('public')->delete($oldUrl);
+            }
 
-        $menus = $request;
-        dd($menus);
-        // $oldData = MenuKatering::find($id);
-        // dd($oldData);
+            $pathImage = $menus['gambar']->store('images', 'public');
+            $newUrl = Storage::url($pathImage);
+        }
 
-        return null;
+        $oldData->update([
+            'category_menu_id' => $menus['category_id'],
+            'nama' => $menus['nama'],
+            'deskripsi' => $menus['deskripsi'],
+            'price' => $menus['harga'],
+            'gambar' => $newUrl,
+            'qty' => $menus['qty']
+        ]);
+
+        return Redirect::route(('menu.list'));
     }
 
     public function store(MenuKateringRequest $request) {
@@ -70,7 +98,7 @@ class MenuKateringController extends Controller
         if (!$data) {
             return response()->json(['message' => 'Data not Found'], 404);
         }
-
+        
         $sUrl = explode('/', $data->gambar);
         $url = $sUrl[count($sUrl)-2].'/'.$sUrl[count($sUrl)-1];
 

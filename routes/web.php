@@ -4,6 +4,7 @@ use App\Http\Controllers\CategoryMenuController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\MenuKateringController;
 use App\Http\Controllers\MerchantProfileController;
+use App\Http\Controllers\OrderController;
 use App\Models\MenuKatering;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -36,12 +37,16 @@ Route::middleware('auth')->group(function () {
         Route::get('/list', [MenuKateringController::class, 'index'])->name('menu.list');
         Route::get('/form/{id}', [MenuKateringController::class, 'form'])->name('menu.form');
         Route::post('/form', [MenuKateringController::class, 'store'])->name('menu.store');
-        Route::put('/form/{id}', [MenuKateringController::class, 'update'])->name('menu.update');
+        Route::post('/form/{id}', [MenuKateringController::class, 'update'])->name('menu.update');
         Route::delete('/delete/{id}', [MenuKateringController::class, 'delete'])->name('menu.delete');
     });
 
     Route::prefix('menu-category')->group(function () {
        Route::get('/option', [CategoryMenuController::class, 'optionData'])->name('category.json'); 
+    });
+
+    Route::prefix('order')->group(function () {
+        Route::get('/list', [OrderController::class, 'index'])->name('order.list');
     });
 });
 
