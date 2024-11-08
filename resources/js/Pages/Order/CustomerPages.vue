@@ -1,8 +1,8 @@
 <script setup>
 import { router, usePage } from '@inertiajs/vue3';
-import CardBox from '../Katering/Partials/CardBox.vue';
+import CardBox from './Partials/CardBox.vue';
 import { ref, watch } from 'vue';
-import Paging from '../Katering/Partials/Paging.vue';
+import Paging from '@/Components/Paging.vue';
 import SelectOption from '@/Components/SelectOption.vue';
 
 const pageData = usePage().props;
@@ -16,7 +16,6 @@ watch(selectedId, (Ids) => {
         only: ['menu'],
         replace: true,
         onSuccess: (page) => {
-            console.log(page);
             dataList.value = page.props.menu.data;
         }
     });

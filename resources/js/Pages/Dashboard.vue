@@ -4,6 +4,7 @@ import { Head } from '@inertiajs/vue3';
 import { ref, onMounted } from 'vue';
 import CartLogo from '@/Components/CartLogo.vue';
 import CustomerPages from './Order/CustomerPages.vue';
+import CartHeader from './Order/Partials/CartHeader.vue';
 
 const roles = ref([]);
 
@@ -22,16 +23,13 @@ function hasRole(role) {
 
     <AuthenticatedLayout>
         <template #header>
-            <div class="flex items-center justify-between">
+            <div class="flex items-center justify-between" v-if="hasRole('customer')">
+                <CartHeader />
+            </div>
+            <div class="flex items-center justify-between" v-if="hasRole('merchant')">
                 <h2 class="text-xl font-semibold leading-tight text-gray-800">
                     Welcome!
                 </h2>
-                <div class="relative">
-                    <CartLogo />
-                    <span class="absolute -top-1 -left-1 bg-red-600 text-white text-xs font-semibold rounded-full h-4 w-4 flex items-center justify-center">
-                        0
-                    </span>
-                </div>
             </div>
         </template>
 

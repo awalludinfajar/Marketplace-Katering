@@ -4,7 +4,7 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 import { Head, Link, router, usePage } from '@inertiajs/vue3';
 import CardWidth from '@/Pages/Katering/Partials/CardWidth.vue';
 import { ref, watch } from 'vue'
-import Paging from './Partials/Paging.vue';
+import Paging from '@/Components/Paging.vue';
 import SelectOption from '@/Components/SelectOption.vue';
 
 const pageData = usePage().props;

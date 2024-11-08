@@ -45,6 +45,7 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::prefix('order')->group(function () {
+        Route::get('/detail/{id}', [OrderController::class, 'details'])->name('menu.detail');
         Route::get('/list', [OrderController::class, 'index'])->name('order.list');
     });
 });
