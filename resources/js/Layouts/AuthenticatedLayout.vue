@@ -9,7 +9,6 @@ import { Link } from '@inertiajs/vue3';
 import axios from 'axios';
 
 const roles = ref([]);
-const permissions = ref([]);
 
 onMounted(async () => {
   const response = await axios.get('/user/roles');
@@ -121,7 +120,6 @@ const showingNavigationDropdown = ref(false);
                                 </Dropdown>
                             </div>
                         </div>
-
                         <!-- Hamburger -->
                         <div class="-me-2 flex items-center sm:hidden">
                             <button

@@ -2,6 +2,13 @@
 import { usePage } from '@inertiajs/vue3';
 import { Inertia } from '@inertiajs/inertia';
 
+const props = defineProps({
+    path: {
+        type: String,
+        requred: true
+    }
+});
+
 const pagination = usePage().props.menu.data;
 
 if (pagination.links[0].label === "&laquo; Previous") {
@@ -16,7 +23,7 @@ function goToPage(url) {
     if (!url) return;
     const pageNumber = new URL(url, window.location.origin).searchParams.get('page');
     if (pageNumber) {
-        Inertia.get(route('menu.list', { page: pageNumber }));
+        Inertia.get(route(props.path, { page: pageNumber }));
     }
 }
 

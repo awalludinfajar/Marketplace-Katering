@@ -21,7 +21,7 @@ class MerchantProfileController extends Controller
         $merchants = $merchant->validated();
         
         $merchant->user()->merchantProfile()->update($merchants);
-        // $merchantProfile->update($merchants);
+
         return Redirect::route('merchant.edit');
     }
 }

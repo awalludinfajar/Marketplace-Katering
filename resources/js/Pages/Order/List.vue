@@ -7,6 +7,10 @@ import { Head } from '@inertiajs/vue3';
     <Head title="Menu Orderan"/>
 
     <AuthenticatedLayout>
-        
+        <template #header>
+            <h2 class="text-xl font-semibold leading-tight text-gray-800">
+                Orderan
+            </h2>
+        </template>
     </AuthenticatedLayout>
 </template>

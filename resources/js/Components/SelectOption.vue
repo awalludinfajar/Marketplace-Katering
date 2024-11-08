@@ -46,7 +46,8 @@ onMounted(() => {
         @change="updateSelectedId"
         typeof="select"
         class="mt-1 block w-full rounded-md border-gray-300">
-        <option value="0"></option>
+        <option disabled value="0">-- Pilih Kategori --</option>
+        <option value="0">All</option>
         <option v-for="option in options" :key="option.id" :value="option.id">
             {{ option.nama }}
         </option>

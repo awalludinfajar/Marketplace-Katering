@@ -52,7 +52,9 @@ watch(refSelectedId, (isId) => {
                             </Link>
                         </div>
                         <CardWidth :data="dataList"/>
-                        <Paging />
+                        <Paging 
+                            :path="'menu.list'"
+                        />
                     </section>
                 </div>
             </div>  
