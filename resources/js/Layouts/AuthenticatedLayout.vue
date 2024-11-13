@@ -43,9 +43,7 @@ const showingNavigationDropdown = ref(false);
                             </div>
 
                             <!-- Navigation Links -->
-                            <div
-                                class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex"
-                            >
+                            <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                                 <NavLink
                                     :href="route('dashboard')"
                                     :active="route().current('dashboard')"
@@ -66,13 +64,11 @@ const showingNavigationDropdown = ref(false);
                                 >
                                     Pesanan
                                 </NavLink>
-                                <NavLink
+                                <!-- <NavLink
                                     v-if="hasRole('customer')"
                                 >
                                     Pesanan saya
-                                </NavLink>
-                                <!-- :href="route('order.list')"
-                                    :active="route().current('order.list')" -->
+                                </NavLink> -->
                             </div>
                         </div>
 
@@ -109,6 +105,11 @@ const showingNavigationDropdown = ref(false);
                                             :href="route('profile.edit')"
                                         >
                                             Profile
+                                        </DropdownLink>
+                                        <DropdownLink
+                                            :href="route('address.list')"
+                                        >
+                                            User Address
                                         </DropdownLink>
                                         <DropdownLink
                                             :href="route('merchant.edit')"

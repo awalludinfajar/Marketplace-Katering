@@ -50,4 +50,8 @@ class User extends Authenticatable
     public function merchantProfile() {
         return $this->hasOne(MerchantProfile::class);
     }
+
+    public function usersAddress() {
+        return $this->hasMany(UsersAddress::class);
+    }
 }

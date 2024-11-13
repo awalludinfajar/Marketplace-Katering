@@ -1,12 +1,12 @@
 <?php
 
+use App\Http\Controllers\AddressController;
 use App\Http\Controllers\CategoryMenuController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\MenuKateringController;
 use App\Http\Controllers\MerchantProfileController;
 use App\Http\Controllers\OrderController;
-use App\Models\MenuKatering;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -26,6 +26,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::prefix('profile')->group(function () {
+        Route::get('/address', [AddressController::class, 'index'])->name('address.list');
+        Route::get('/form/{id}', [AddressController::class, 'form'])->name('address.input');
+        Route::Post('/form', [AddressController::class, 'store'])->name('address.store');
+        Route::post('/form/{id}', [AddressController::class, 'update'])->name('address.update');
+        Route::delete('/delete/{id}', [AddressController::class, 'delete'])->name('address.delete');
+    });
     
     Route::prefix('merchant')->group(function () {
        Route::get('/detail', [MerchantProfileController::class, 'edit'])->name('merchant.edit');
@@ -45,8 +53,8 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::prefix('order')->group(function () {
-        Route::get('/detail/{id}', [OrderController::class, 'details'])->name('menu.detail');
         Route::get('/list', [OrderController::class, 'index'])->name('order.list');
+        Route::get('/detail/{id}', [OrderController::class, 'details'])->name('menu.detail');
     });
 });
 
