@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 import BackButton from '@/Components/BackButton.vue';
 import Checkbox from '@/Components/Checkbox.vue';
 import InputError from '@/Components/InputError.vue';
