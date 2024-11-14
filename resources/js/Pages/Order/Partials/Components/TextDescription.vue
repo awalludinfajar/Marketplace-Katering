@@ -1,7 +1,13 @@
 <script setup>
+import { computed } from 'vue';
+
 
 const props = defineProps({
     data: Object
+});
+
+const formattedPrice = computed(() => {
+    return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(props.data.price);
 });
 
 </script>
@@ -12,7 +18,7 @@ const props = defineProps({
     </h2>
     <div class="flex flex-col sm:flex-row sm:items-center mb-6">
         <h6 class="font-manrope font-semibold text-2xl leading-9 text-gray-900 pr-5 mr-5">
-            Rp. {{ data.price }}
+            {{ formattedPrice }}
         </h6>
     </div>
     <p class="text-gray-500 text-base font-normal mb-5">
