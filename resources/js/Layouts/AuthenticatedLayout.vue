@@ -64,11 +64,13 @@ const showingNavigationDropdown = ref(false);
                                 >
                                     Pesanan
                                 </NavLink>
-                                <!-- <NavLink
+                                <NavLink
+                                    :href="route('customer.order')"
+                                    :active="route().current('customer.order')"
                                     v-if="hasRole('customer')"
                                 >
                                     Pesanan saya
-                                </NavLink> -->
+                                </NavLink>
                             </div>
                         </div>
 

@@ -11,6 +11,11 @@ import BackButton from '@/Components/BackButton.vue';
 
 const pageData = usePage().props.menu;
 
+let quantity = 1;
+
+function addToCart() {
+    console.log(quantity);
+}
 </script>
 
 <template>
@@ -38,8 +43,8 @@ const pageData = usePage().props.menu;
                                             <TextDescription :data="pageData"/>
 
                                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 py-8">
-                                                <InputQuantity />
-                                                <AddCartButton />
+                                                <InputQuantity v-model="quantity" />
+                                                <AddCartButton @click="addToCart"/>
                                             </div>
                                             <div class="flex items-center gap-3">
                                                 <BuyNowButton />

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AddressController;
 use App\Http\Controllers\CategoryMenuController;
+use App\Http\Controllers\CustomerOrderController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\MenuKateringController;
@@ -56,6 +57,18 @@ Route::middleware('auth')->group(function () {
         Route::get('/list', [OrderController::class, 'index'])->name('order.list');
         Route::get('/detail/{id}', [OrderController::class, 'details'])->name('menu.detail');
     });
+
+    Route::prefix('myorder')->group(function () {
+       Route::get('/list', [CustomerOrderController::class, 'index'])->name('customer.order');
+       
+       Route::prefix('cart')->group(function () {
+           Route::post('/add', [CustomerOrderController::class, 'addToCart'])->name('cart.add');
+           Route::get('/list', [CustomerOrderController::class, 'getCart'])->name('cart.get');
+           Route::delete('/remove', [CustomerOrderController::class, 'removeFormCart'])->name('cart.remove');
+           Route::post('/checkout', [CustomerOrderController::class, 'chckoutProductFromCart'])->name('cart.checkout');
+       });
+    });
+
 });
 
 

@@ -26,7 +26,7 @@ const props = defineProps({
                     d="M7.66669 12.629L10.4289 15.3913C10.8734 15.8357 11.0956 16.0579 11.3718 16.0579C11.6479 16.0579 11.8701 15.8357 12.3146 15.3913L18.334 9.37183"
                     stroke="white" stroke-width="1.6" stroke-linecap="round" />
             </svg>
-            <span class="font-normal text-base text-gray-900 ">Branded shirt</span>
+            <span class="font-normal text-base text-gray-900 ">{{ data.category_menu.nama }}</span>
         </li>
     </ul>
 </template>

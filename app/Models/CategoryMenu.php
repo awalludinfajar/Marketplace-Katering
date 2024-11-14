@@ -15,6 +15,6 @@ class CategoryMenu extends Model
     ];
 
     public function menuKatering() {
-        return $this->belongsTo(MenuKatering::class);
+        return $this->hasMany(MenuKatering::class, 'id');
     }
 }

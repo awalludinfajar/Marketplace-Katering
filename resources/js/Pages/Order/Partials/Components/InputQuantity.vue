@@ -1,15 +1,38 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 
-const quantity = ref(0);
+const props = defineProps({
+    modelValue: {
+        type: Number,
+        default: 1
+    },
+});
+
+const emit = defineEmits(['update:modelValue']);
+const quantity = ref(props.modelValue);
+
+watch(() => props.modelValue, (newVal) => {
+    quantity.value = newVal;
+});
 
 function decrement() {
-    quantity.value--;
+    if (quantity.value > 1) {
+        quantity.value--;
+        emit('update:modelValue', quantity.value);
+    }
 }
 
 function increment() {
     quantity.value++;
+    emit('update:modelValue', quantity.value);
 }
+
+function updateQuantity(value) {
+    const numericValue = Number(value) || 1;
+    quantity.value = numericValue;
+    emit('update:modelValue', quantity.value);
+}
+
 </script>
 
 <template>
@@ -28,7 +51,9 @@ function increment() {
             type="text"
             v-model="quantity"
             class="font-semibold text-gray-900 cursor-pointer text-lg py-[13px] px-6 w-full sm:max-w-[118px] outline-0 border-y border-gray-400 bg-transparent placeholder:text-gray-900 text-center hover:bg-gray-50"
-            placeholder="1">
+            placeholder="1"
+            @input="updateQuantity($event.target.value)"
+        >
         <button
             @click="increment"
             class="group py-4 px-6 border border-gray-400 rounded-r-full bg-white transition-all duration-300 hover:bg-gray-50 hover:shadow-sm hover:shadow-gray-300">

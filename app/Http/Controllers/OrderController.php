@@ -14,7 +14,7 @@ class OrderController extends Controller
     }
 
     public function details($id) : Response {
-        $menu = MenuKatering::find($id);
+        $menu = MenuKatering::with('categoryMenu')->find($id);
 
         return Inertia::render('Order/DetailsCustomer', [
             'id' => $id,

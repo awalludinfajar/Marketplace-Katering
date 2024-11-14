@@ -24,6 +24,6 @@ class MenuKatering extends Model
     }
 
     public function categoryMenu() {
-        return $this->hasMany(CategoryMenu::class);
+        return $this->belongsTo(CategoryMenu::class, 'category_menu_id');
     }
 }
