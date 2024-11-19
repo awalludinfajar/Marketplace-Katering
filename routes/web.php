@@ -62,10 +62,10 @@ Route::middleware('auth')->group(function () {
        Route::get('/list', [CustomerOrderController::class, 'index'])->name('customer.order');
        
        Route::prefix('cart')->group(function () {
+           Route::get('/', [CustomerOrderController::class, 'cart'])->name('cart.page');
            Route::post('/add', [CustomerOrderController::class, 'addToCart'])->name('cart.add');
            Route::get('/list', [CustomerOrderController::class, 'getCart'])->name('cart.get');
-           Route::delete('/remove', [CustomerOrderController::class, 'removeFormCart'])->name('cart.remove');
-           Route::post('/checkout', [CustomerOrderController::class, 'chckoutProductFromCart'])->name('cart.checkout');
+           Route::delete('/remove/{id}', [CustomerOrderController::class, 'removeFromCart'])->name('cart.remove');
        });
     });
 

@@ -11,12 +11,12 @@ import axios from 'axios';
 const roles = ref([]);
 
 onMounted(async () => {
-  const response = await axios.get('/user/roles');
-  roles.value = response.data.roles;
+    const response = await axios.get('/user/roles');
+    roles.value = response.data.roles;
 });
 
 function hasRole(role) {
-  return roles.value.includes(role);
+    return roles.value.includes(role);
 }
 
 const showingNavigationDropdown = ref(false);

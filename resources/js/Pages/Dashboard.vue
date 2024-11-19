@@ -4,7 +4,7 @@ import { Head } from '@inertiajs/vue3';
 import { ref, onMounted } from 'vue';
 import CartLogo from '@/Components/CartLogo.vue';
 import CustomerPages from './Order/CustomerPages.vue';
-import CartHeader from './Order/Partials/CartHeader.vue';
+import CartHeader from './Cart/Components/CartHeader.vue';
 
 const roles = ref([]);
 

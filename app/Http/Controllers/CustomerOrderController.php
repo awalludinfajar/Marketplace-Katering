@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\MenuKatering;
+use App\Services\CartRedisTransformService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redis;
 use Inertia\Inertia;
@@ -9,8 +11,31 @@ use Inertia\Response;
 
 class CustomerOrderController extends Controller
 {
+
+    public function __construct(private CartRedisTransformService $transformService) {}
+
     public function index() : Response {
         return Inertia::render('CustomerOrder/List', []);
+    }
+
+    public function cart(Request $request) : Response {
+        $userId = $request->user()->id;
+        $cartKey = "user:{$userId}:cart";
+
+        $cartItems = Redis::hgetall($cartKey);
+
+        $cart = [];
+        foreach ($cartItems as $item) {
+            $cart[] = json_decode($item, true);
+        }
+
+        $query = MenuKatering::query()->with('merchantProfile');
+        $res = $this->transformService->queryCart($query, $cart);
+        $data = $this->transformService->transformData($res->get(), $cart);
+
+        return Inertia::render('Cart/List', [
+            'cardData' => $data
+        ]);
     }
 
     public function addToCart(Request $request) {
@@ -21,7 +46,7 @@ class CustomerOrderController extends Controller
         $cartKey = "user:{$userId}:cart";
 
         $cart = Redis::hget($cartKey, $productId);
-        if ($cartKey) {
+        if ($cart) {
             $cart = json_decode($cart, true);
             $cart['quantity'] += $quantity;
         } else {
@@ -61,7 +86,4 @@ class CustomerOrderController extends Controller
         return response()->json(['message' => 'Product removed from cart']);
     }
 
-    public function chckoutProductFromCart(Request $request) {
-        return $request;
-    }
 }

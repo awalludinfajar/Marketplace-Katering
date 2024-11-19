@@ -1,20 +1,29 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, usePage } from '@inertiajs/vue3';
-import CartHeader from './Partials/CartHeader.vue';
+import CartHeader from '../Cart/Components/CartHeader.vue';
 import InputQuantity from './Partials/Components/InputQuantity.vue';
 import AddCartButton from './Partials/Components/AddCartButton.vue';
 import BuyNowButton from './Partials/Components/BuyNowButton.vue';
 import TextDescription from './Partials/Components/TextDescription.vue';
 import ImageDetail from './Partials/Components/ImageDetail.vue';
 import BackButton from '@/Components/BackButton.vue';
+import axios from 'axios';
 
 const pageData = usePage().props.menu;
 
 let quantity = 1;
 
 function addToCart() {
-    console.log(quantity);
+    axios.post(route('cart.add'), {
+        'productId' : pageData.id,
+        'quantity' : quantity,
+        'storeId' : pageData.merchant_profile_id
+    }).then(response => {
+        alert(response.data.message);
+    }).catch(error => {
+        console.error('There was an error adding the product to cart:', error.message);
+    });
 }
 </script>
 
@@ -43,7 +52,7 @@ function addToCart() {
                                             <TextDescription :data="pageData"/>
 
                                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 py-8">
-                                                <InputQuantity v-model="quantity" />
+                                                <InputQuantity v-model="quantity" :data="pageData.qty" />
                                                 <AddCartButton @click="addToCart"/>
                                             </div>
                                             <div class="flex items-center gap-3">

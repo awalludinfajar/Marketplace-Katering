@@ -6,6 +6,10 @@ const props = defineProps({
         type: Number,
         default: 1
     },
+    data: {
+        type: Number,
+        default: 0
+    }
 });
 
 const emit = defineEmits(['update:modelValue']);
@@ -23,8 +27,10 @@ function decrement() {
 }
 
 function increment() {
-    quantity.value++;
-    emit('update:modelValue', quantity.value);
+    if (quantity.value < props.data) {        
+        quantity.value++;
+        emit('update:modelValue', quantity.value);
+    }
 }
 
 function updateQuantity(value) {
@@ -52,6 +58,7 @@ function updateQuantity(value) {
             v-model="quantity"
             class="font-semibold text-gray-900 cursor-pointer text-lg py-[13px] px-6 w-full sm:max-w-[118px] outline-0 border-y border-gray-400 bg-transparent placeholder:text-gray-900 text-center hover:bg-gray-50"
             placeholder="1"
+            disabled
             @input="updateQuantity($event.target.value)"
         >
         <button
